@@ -8,6 +8,10 @@
 !plugin-map.json
 !*.conf.yml
 !*.toml
+!runtime/openclaw-jarvis/registry.json
+!runtime/openclaw-jarvis/config/*.json
+!runtime/openclaw-jarvis/config-set.specialist-policy.json
+!runtime/openclaw-jarvis/config-set.secrets-file.json
 
 # Exclusiones de seguridad específicas (No versionar llaves/auth)
 .credentials.json
@@ -37,6 +41,8 @@ __pycache__/
 .security/
 .sandbox/
 .claude-backup-pre-migration/
+runtime/openclaw-jarvis/runs/
+runtime/openclaw-jarvis/agents/*/.openclaw/
 
 # --- Otros archivos de entorno ---
 .DS_Store

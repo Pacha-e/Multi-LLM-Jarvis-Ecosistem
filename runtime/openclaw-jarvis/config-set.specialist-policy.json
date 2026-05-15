@@ -1,0 +1,84 @@
+[
+  {
+    "path": "agents.defaults.bootstrapMaxChars",
+    "value": 3000
+  },
+  {
+    "path": "agents.defaults.bootstrapTotalMaxChars",
+    "value": 12000
+  },
+  {
+    "path": "agents.defaults.contextInjection",
+    "value": "continuation-skip"
+  },
+  {
+    "path": "agents.defaults.bootstrapPromptTruncationWarning",
+    "value": "off"
+  },
+  {
+    "path": "agents.list[1].tools.allow",
+    "value": [
+      "agents_list",
+      "sessions_spawn",
+      "sessions_send",
+      "sessions_history",
+      "sessions_yield",
+      "session_status",
+      "memory_search",
+      "memory_get"
+    ]
+  },
+  {
+    "path": "agents.list[2].tools.allow",
+    "value": [
+      "exec",
+      "read",
+      "file_fetch",
+      "sessions_yield",
+      "memory_search",
+      "memory_get"
+    ]
+  },
+  {
+    "path": "agents.list[3].tools.allow",
+    "value": [
+      "exec",
+      "read",
+      "file_fetch",
+      "dir_list",
+      "web_search",
+      "web_fetch",
+      "sessions_yield",
+      "memory_search",
+      "memory_get"
+    ]
+  },
+  {
+    "path": "agents.list[4].tools.allow",
+    "value": [
+      "exec",
+      "read",
+      "edit",
+      "write",
+      "file_fetch",
+      "dir_list",
+      "sessions_yield",
+      "memory_search",
+      "memory_get"
+    ]
+  },
+  {
+    "path": "agents.list[5].tools.allow",
+    "value": [
+      "exec",
+      "read",
+      "file_fetch",
+      "dir_list",
+      "web_search",
+      "web_fetch",
+      "sessions_yield",
+      "memory_search",
+      "memory_get"
+    ]
+  }
+]

@@ -1,37 +1,55 @@
-# Documentación del Ecosistema Multi-LLM Jarvis
+# Documentacion del Ecosistema Multi-LLM Jarvis
 
-Esta documentación detalla la arquitectura de tu ecosistema, centralizada en este repositorio.
+Este repositorio centraliza el ecosistema Jarvis: codigo, orquestacion, configuraciones de CLIs y documentacion operativa.
 
-## 1. Visión General
-El proyecto `Multi-LLM-Jarvis-Ecosistem` es una solución completa para un asistente personal (Jarvis) con capacidades de RAG, multi-agente, memoria persistente y orquestación de herramientas externas.
+## 1. Vision General
+
+`Multi-LLM-Jarvis-Ecosistem` busca convertir Jarvis en un asistente personal multi-LLM con memoria persistente, RAG, herramientas locales, browser automation, voz y ejecucion 24/7 de bajo coste.
 
 ## 2. Estructura de Directorios
-- `core/`: Núcleo de la aplicación Jarvis (Python).
-- `ecosystem/`: Orquestación, sincronización de plugins y hooks (WSL/Windows).
-- `configs/`: Configuraciones versionadas de herramientas externas (Claude, Codex, Aider).
-- `scripts/`: Herramientas de automatización y setup (symlinks).
+
+- `core/`: nucleo Python/FastAPI de Jarvis, RAG, memoria, tools, voz y UI inicial.
+- `ecosystem/`: scripts de orquestacion, sincronizacion MCP/skills y memoria compartida.
+- `configs/`: configuraciones versionadas de herramientas externas como Claude, Codex y Aider.
+- `runtime/openclaw-jarvis/`: runtime operativo del comando `jarvis`, agentes OpenClaw y dispatcher multi-CLI.
+- `scripts/`: automatizacion local, setup y enlaces simbolicos.
+- `docs/`: investigacion, arquitectura, backlog y runbooks del ecosistema.
 
 ## 3. Componentes Detallados
 
-### A. Jarvis (core/)
-- `jarvis/`: Lógica principal, enrutador de LLMs, memoria y agentes.
-- `jarvis/agent/`: Módulos de IA (router, rag, memory, personas, tools).
-- `jarvis/voice/`: Módulos de voz (stt, tts, wake_word).
-- `jarvis/ui/`: Interfaz web del asistente.
+### Jarvis (`core/`)
 
-### B. Ecosistema de Orquestación (ecosystem/)
-- Mapeo de plugins (`plugin-map.json`).
-- Sincronización bidireccional (scripts `.ps1` y `.sh`).
-- Memoria compartida (`shared-memory/`).
+- `jarvis/`: logica principal, enrutador de LLMs, memoria y agentes.
+- `jarvis/agent/`: router, RAG, memory, personas y tools.
+- `jarvis/voice/`: STT, TTS y wake word.
+- `jarvis/ui/`: interfaz web del asistente.
 
-### C. Configuraciones Externas (configs/)
+### Ecosistema de Orquestacion (`ecosystem/`)
+
+- Mapeo de plugins y MCPs.
+- Sincronizacion bidireccional entre herramientas.
+- Memoria compartida para decisiones, indices y rendimiento.
+
+### Configuraciones Externas (`configs/`)
+
 - `aider/`: `.aider.conf.yml`, `.aider.model.settings.yml`.
-- `claude/`: `settings.json`.
-- `codex/`: `config.toml`, `hooks.json`.
+- `claude/`: settings versionables no sensibles.
+- `codex/`: `config.toml` y hooks versionables.
+
+### Runtime Operativo (`runtime/openclaw-jarvis/`)
+
+- `bin/jarvis-auto.mjs`: interfaz diaria, doctor, routing y modos de ejecucion.
+- `bin/jarvis-dispatch.mjs`: dispatcher hacia Claude, Codex, Qwen, Aider, Multica y agentes OpenClaw.
+- `agents/`: perfiles `orion`, `kiro`, `nova`, `spark` e `iris`.
+- `config/`: perfil de Jarvis versionable sin secretos.
 
 ## 4. Conectividad
-- **Symlinks:** Las configuraciones se vinculan mediante enlaces simbólicos desde este repositorio a sus ubicaciones originales (`~/.claude/`, `~/.codex/`, etc.), garantizando que este repo sea la "fuente de verdad".
-- **Scripts:** `ecosystem/` contiene los hooks que mantienen la coherencia entre el sistema Windows y el entorno de ejecución (WSL2).
 
----
-*Para más detalles, consultar `core/docs/informe_proyecto.md` y `ecosystem/README.md`.*
+- Las configuraciones se vinculan mediante symlinks desde sus ubicaciones originales (`~/.claude/`, `~/.codex/`, etc.) hacia este repo.
+- `ecosystem/` contiene hooks y scripts para mantener coherencia entre Windows, WSL y herramientas AI.
+- Obsidian funciona como memoria central del ecosistema y debe registrar decisiones duraderas.
+
+## 5. Investigacion y Vision
+
+- `docs/jarvis-vision-research-2026-05-15.md`: investigacion de referencia para convertir el ecosistema en un Jarvis operativo: OpenClaw como control plane, memoria Obsidian, scraping de Reels, browser automation, voz local y plan 24/7.
+- `docs/unification-plan-2026-05-15.md`: plan paso a paso para que el monorepo sea la unica fuente de verdad.

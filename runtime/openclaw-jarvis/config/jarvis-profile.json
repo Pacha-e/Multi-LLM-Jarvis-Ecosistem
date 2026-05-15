@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "profileName": "Jarvis",
+  "ux": {
+    "defaultMode": "auto",
+    "compactOutput": true,
+    "showRunPath": true,
+    "beginnerFriendly": true
+  },
+  "safety": {
+    "noAutoCommit": true,
+    "noAutoPush": true,
+    "noSecretsInLogs": true,
+    "preserveUserChanges": true
+  },
+  "cost": {
+    "defaultBudget": "economy",
+    "orchestrationBackend": "subscription-cli",
+    "subscriptionCoordinator": "claude",
+    "preferSubscriptionCli": true,
+    "avoidApiByDefault": true,
+    "localFirstVoice": true,
+    "economyReviewOnlyWhenRisky": true,
+    "riskKeywords": [
+      "auth",
+      "login",
+      "seguridad",
+      "security",
+      "pago",
+      "payment",
+      "stripe",
+      "database",
+      "base de datos",
+      "migration",
+      "migracion",
+      "deploy",
+      "produccion",
+      "production",
+      "secret",
+      "token"
+    ]
+  },
+  "voice": {
+    "style": "cinematic-original",
+    "voiceName": "Microsoft David Desktop",
+    "preferredVoiceNames": [
+      "Microsoft George",
+      "Microsoft David Desktop",
+      "Microsoft Hazel Desktop",
+      "Microsoft Zira Desktop"
+    ],
+    "rate": -1,
+    "volume": 100,
+    "sample": "Good evening. Jarvis is online. Systems are nominal."
+  },
+  "selfImprovement": {
+    "defaultMode": "audit-first",
+    "applyRequiresFlag": true,
+    "target": "JARVIS_HOME"
+  }
+}

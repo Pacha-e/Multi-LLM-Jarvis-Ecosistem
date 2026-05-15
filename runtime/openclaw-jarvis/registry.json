@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "updated": "2026-05-11",
+  "controlPlane": "OpenClaw",
+  "dispatcherMode": "subscription-cli-first",
+  "dailyInterface": {
+    "command": "jarvis",
+    "router": "bin/jarvis-auto.mjs",
+    "install": "install.sh",
+    "doctor": "jarvis doctor",
+    "selfImprove": "jarvis improve",
+    "selfImproveApply": "jarvis improve --apply",
+    "voiceCommand": "jarvis-voz",
+    "voiceConfig": "config/jarvis-profile.json",
+    "defaultMode": "auto",
+    "modes": ["auto", "fast", "full", "council"],
+    "backends": ["subscription-cli", "openclaw-agent"]
+  },
+  "policy": {
+    "delegation": "maximum-useful",
+    "noDuplicateWork": true,
+    "noParallelSameFileWrites": true,
+    "requireEvidence": true,
+    "noSecretsInLogs": true,
+    "defaultBudget": "economy",
+    "orchestrationBackend": "subscription-cli",
+    "subscriptionCoordinator": "claude",
+    "preferSubscriptionCli": true,
+    "avoidApiByDefault": true
+  },
+  "cliAdapters": {
+    "codex": {
+      "role": "direct-codex-builder",
+      "path": "codex",
+      "mode": "exec-read-only"
+    },
+    "codex-write": {
+      "role": "direct-codex-writer",
+      "path": "codex",
+      "mode": "exec-workspace-write"
+    },
+    "claude-plan": {
+      "role": "subscription-planner",
+      "path": "claude",
+      "mode": "print-plan"
+    },
+    "claude-architect": {
+      "role": "subscription-architect",
+      "path": "claude",
+      "mode": "print-plan"
+    },
+    "claude-review": {
+      "role": "subscription-reviewer",
+      "path": "claude",
+      "mode": "print-plan"
+    },
+    "codex-plan": {
+      "role": "subscription-codex-planner",
+      "path": "codex",
+      "mode": "exec-read-only"
+    },
+    "codex-implement": {
+      "role": "subscription-codex-implementer",
+      "path": "codex",
+      "mode": "exec-workspace-write"
+    },
+    "codex-review": {
+      "role": "subscription-codex-reviewer",
+      "path": "codex",
+      "mode": "exec-read-only"
+    },
+    "claude": {
+      "role": "direct-claude-architect",
+      "path": "claude",
+      "mode": "print-plan"
+    },
+    "qwen": {
+      "role": "direct-qwen-council",
+      "path": "qwen",
+      "mode": "plan-json"
+    },
+    "multica": {
+      "role": "agent-platform",
+      "path": "multica",
+      "mode": "native-linux",
+      "agentCreate": "multica agent create"
+    }
+  },
+  "agents": {
+    "orion": {
+      "role": "planner",
+      "workspace": "agents/orion",
+      "defaultModel": "google/gemini-2.5-flash-lite"
+    },
+    "kiro": {
+      "role": "spec-architect",
+      "workspace": "agents/kiro",
+      "defaultModel": "google/gemini-2.5-flash"
+    },
+    "nova": {
+      "role": "architect-debugger",
+      "workspace": "agents/nova",
+      "defaultModel": "google/gemini-2.5-flash"
+    },
+    "spark": {
+      "role": "codex-builder",
+      "workspace": "agents/spark",
+      "defaultModel": "google/gemini-2.5-flash-lite"
+    },
+    "aider": {
+      "role": "optional-editor",
+      "workspace": ".",
+      "defaultModel": "gemini/gemini-2.5-flash"
+    },
+    "iris": {
+      "role": "validator-council",
+      "workspace": "agents/iris",
+      "defaultModel": "google/gemini-2.5-flash"
+    }
+  }
+}

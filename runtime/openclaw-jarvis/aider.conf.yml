@@ -1,0 +1,7 @@
+model: gemini/gemini-2.5-flash
+editor-model: gemini/gemini-2.5-flash
+auto-commits: false
+dirty-commits: false
+check-update: false
+analytics: false
+cache-prompts: true
