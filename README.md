@@ -53,3 +53,16 @@ Este repositorio centraliza el ecosistema Jarvis: codigo, orquestacion, configur
 
 - `docs/jarvis-vision-research-2026-05-15.md`: investigacion de referencia para convertir el ecosistema en un Jarvis operativo: OpenClaw como control plane, memoria Obsidian, scraping de Reels, browser automation, voz local y plan 24/7.
 - `docs/unification-plan-2026-05-15.md`: plan paso a paso para que el monorepo sea la unica fuente de verdad.
+- `docs/fase1-completion-2026-05-15.md`: reporte de cierre Fase 1 (unificacion runtime + doctor Windows + tests + templates configs + legacy congelado).
+
+## 6. Estado Fase 1 — COMPLETA (2026-05-15)
+
+Commits clave:
+- `6873a45` unify runtime
+- `6e032b1` doctor PATH Windows (.CMD shims)
+- `ecea009` test_jarvis expone accuracy real intent_classifier
+- `123c5db` templates `*.example.json`
+
+Doctor `jarvis doctor`: codex/claude/qwen OK con paths nativos Windows. Tests: 6/7 PASS. Legacy `jarvis_files/` y `OpenClawJarvis/` marcados `LEGACY.md`, congelados.
+
+Bug abierto: `IntentClassifier` train 100% / predict 0/5 español. Ver `docs/fase1-completion-2026-05-15.md`.
