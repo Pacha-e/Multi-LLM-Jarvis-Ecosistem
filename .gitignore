@@ -12,6 +12,7 @@
 !runtime/openclaw-jarvis/config/*.json
 !runtime/openclaw-jarvis/config-set.specialist-policy.json
 !runtime/openclaw-jarvis/config-set.secrets-file.json
+!**/*.example.json
 
 # Exclusiones de seguridad específicas (No versionar llaves/auth)
 .credentials.json

@@ -1,0 +1,39 @@
+{
+  "_comment": "Template publico. Copiar a hooks.json y ajustar rutas a hooks locales.",
+  "SessionStart": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "node \"<RUTA_HOOKS>/session-start.js\"",
+          "timeout": 10,
+          "statusMessage": "Cargando contexto del ecosistema multi-LLM..."
+        }
+      ]
+    }
+  ],
+  "UserPromptSubmit": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "node \"<RUTA_HOOKS>/multi-llm-router.js\"",
+          "timeout": 5,
+          "statusMessage": "Analizando routing optimo..."
+        }
+      ]
+    }
+  ],
+  "Stop": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "node \"<RUTA_HOOKS>/session-stop.js\"",
+          "timeout": 10,
+          "statusMessage": "Sincronizando bridge Claude..."
+        }
+      ]
+    }
+  ]
+}

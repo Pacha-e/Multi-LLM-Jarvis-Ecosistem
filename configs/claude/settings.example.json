@@ -1,0 +1,47 @@
+{
+  "_comment": "Template publico. Copiar a settings.json y rellenar secretos. NO commitear settings.json.",
+  "skillListingMaxDescChars": 1024,
+  "skillListingBudgetFraction": 0.05,
+  "env": {
+    "BASH_MAX_OUTPUT_LENGTH": "10000",
+    "CAVEMAN_DEFAULT_MODE": "wenyan",
+    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "60",
+    "CLAUDE_CODE_ATTRIBUTION_HEADER": "0",
+    "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "CLAUDE_CODE_EFFORT_LEVEL": "low",
+    "CLAUDE_CODE_FILE_READ_MAX_OUTPUT_TOKENS": "4000",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "claude-haiku-4-5-20251001",
+    "ENABLE_PROMPT_CACHING_1H": "1",
+    "MAX_MCP_OUTPUT_TOKENS": "5000",
+    "MAX_THINKING_TOKENS": "8000",
+    "TICKETS_DB_PASSWORD": "REPLACE_ME",
+    "GROQ_API_KEY": "REPLACE_ME"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(rtk:*)",
+      "Read",
+      "Glob",
+      "Grep",
+      "Write",
+      "Edit",
+      "mcp__lean-ctx__ctx_read",
+      "mcp__lean-ctx__ctx_shell",
+      "mcp__lean-ctx__ctx_search",
+      "mcp__lean-ctx__ctx_tree",
+      "mcp__lean-ctx__ctx_edit"
+    ],
+    "defaultMode": "auto",
+    "additionalDirectories": []
+  },
+  "model": "opus",
+  "hooks": {
+    "_comment": "Rutas a hooks locales fuera del repo. Ajustar a tu sistema.",
+    "Notification": [],
+    "PostCompact": [],
+    "PostToolUse": [],
+    "SessionStart": [],
+    "Stop": []
+  }
+}
