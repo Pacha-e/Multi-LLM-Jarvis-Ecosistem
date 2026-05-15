@@ -1,5 +1,6 @@
-model = "gpt-5.4"
+model = "gpt-5.5"
 model_reasoning_effort = "xhigh"
+project_doc_fallback_filenames = ["CLAUDE.md", "WARP.md", "codex.md"]
 
 [features]
 hooks = true
@@ -26,14 +27,17 @@ tool_timeout_sec = 120
 env = { CLAUDE_PLUGIN_ROOT = 'C:\Users\Acer Nitro\.claude\plugins\marketplaces\thedotmack\plugin' }
 env_vars = ["PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
 
-[mcp_servers.obsidian]
-command = 'C:\Program Files\nodejs\npx.cmd'
-args = ["-y", "obsidian-mcp-server"]
-default_tools_approval_mode = "prompt"
-startup_timeout_sec = 60
-tool_timeout_sec = 120
-env = { OBSIDIAN_BASE_URL = "https://127.0.0.1:27124", OBSIDIAN_VERIFY_SSL = "false", OBSIDIAN_ENABLE_CACHE = "true" }
-env_vars = ["OBSIDIAN_API_KEY", "PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+# Optional: requires Obsidian Local REST API running and OBSIDIAN_API_KEY set.
+# The vault is still available through filesystemHome at D:\Emmanuel\OBSIDIAN.
+#
+# [mcp_servers.obsidian]
+# command = 'C:\Program Files\nodejs\npx.cmd'
+# args = ["-y", "obsidian-mcp-server"]
+# default_tools_approval_mode = "prompt"
+# startup_timeout_sec = 60
+# tool_timeout_sec = 120
+# env = { OBSIDIAN_BASE_URL = "https://127.0.0.1:27124", OBSIDIAN_VERIFY_SSL = "false", OBSIDIAN_ENABLE_CACHE = "true" }
+# env_vars = ["OBSIDIAN_API_KEY", "PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
 
 [mcp_servers.github]
 command = 'C:\Program Files\nodejs\npx.cmd'
@@ -43,10 +47,12 @@ startup_timeout_sec = 60
 tool_timeout_sec = 120
 env_vars = ["GITHUB_PERSONAL_ACCESS_TOKEN", "PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
 
-[mcp_servers.vercel]
-url = "https://mcp.vercel.com"
-bearer_token_env_var = "VERCEL_TOKEN"
-default_tools_approval_mode = "prompt"
+# Optional: requires VERCEL_TOKEN.
+#
+# [mcp_servers.vercel]
+# url = "https://mcp.vercel.com"
+# bearer_token_env_var = "VERCEL_TOKEN"
+# default_tools_approval_mode = "prompt"
 
 [mcp_servers.playwright]
 command = 'C:\Program Files\nodejs\npx.cmd'
@@ -58,19 +64,21 @@ env_vars = ["PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoo
 
 [mcp_servers.filesystemHome]
 command = 'C:\Program Files\nodejs\npx.cmd'
-args = ["-y", "@modelcontextprotocol/server-filesystem", 'C:\Users\Acer Nitro', '\\wsl$\Ubuntu\home\emmanuel']
+args = ["-y", "@modelcontextprotocol/server-filesystem", 'C:\Users\Acer Nitro', 'D:\Emmanuel\OBSIDIAN']
 default_tools_approval_mode = "prompt"
 startup_timeout_sec = 60
 tool_timeout_sec = 120
 env_vars = ["PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
 
-[mcp_servers.supabase]
-command = 'C:\Program Files\nodejs\npx.cmd'
-args = ["-y", "@supabase/mcp-server-supabase@latest"]
-default_tools_approval_mode = "prompt"
-startup_timeout_sec = 60
-tool_timeout_sec = 180
-env_vars = ["SUPABASE_ACCESS_TOKEN", "PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+# Optional: requires SUPABASE_ACCESS_TOKEN.
+#
+# [mcp_servers.supabase]
+# command = 'C:\Program Files\nodejs\npx.cmd'
+# args = ["-y", "@supabase/mcp-server-supabase@latest"]
+# default_tools_approval_mode = "prompt"
+# startup_timeout_sec = 60
+# tool_timeout_sec = 180
+# env_vars = ["SUPABASE_ACCESS_TOKEN", "PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
 
 [mcp_servers.n8n]
 command = 'C:\Program Files\nodejs\npx.cmd'
@@ -81,53 +89,66 @@ tool_timeout_sec = 180
 env = { MCP_MODE = "stdio" }
 env_vars = ["PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
 
-[mcp_servers.nanobanana]
-command = 'C:\Users\Acer Nitro\.local\bin\uvx.exe'
-args = ["nanobanana-mcp-server@latest"]
-default_tools_approval_mode = "prompt"
-startup_timeout_sec = 60
-tool_timeout_sec = 180
-env_vars = ["GEMINI_API_KEY", "GOOGLE_API_KEY", "GCP_PROJECT_ID", "GCP_REGION", "GOOGLE_CLOUD_PROJECT", "PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+# Optional: requires Gemini/Google credentials. uvx now lives under Python312.
+#
+# [mcp_servers.nanobanana]
+# command = 'C:\Users\Acer Nitro\AppData\Local\Programs\Python\Python312\Scripts\uvx.exe'
+# args = ["nanobanana-mcp-server@latest"]
+# default_tools_approval_mode = "prompt"
+# startup_timeout_sec = 60
+# tool_timeout_sec = 180
+# env_vars = ["GEMINI_API_KEY", "GOOGLE_API_KEY", "GCP_PROJECT_ID", "GCP_REGION", "GOOGLE_CLOUD_PROJECT", "PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
 
-[mcp_servers.stitch]
-command = 'C:\Program Files\nodejs\npx.cmd'
-args = ["-y", "stitch-mcp@latest"]
-default_tools_approval_mode = "prompt"
-startup_timeout_sec = 60
-tool_timeout_sec = 180
-env_vars = ["GOOGLE_CLOUD_PROJECT", "PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+# Optional: requires GOOGLE_CLOUD_PROJECT and provider setup.
+#
+# [mcp_servers.stitch]
+# command = 'C:\Program Files\nodejs\npx.cmd'
+# args = ["-y", "stitch-mcp@latest"]
+# default_tools_approval_mode = "prompt"
+# startup_timeout_sec = 60
+# tool_timeout_sec = 180
+# env_vars = ["GOOGLE_CLOUD_PROJECT", "PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
 
-[mcp_servers.vibeKanban]
-command = 'C:\Program Files\nodejs\npm.cmd'
-args = ["exec", "vibe-kanban", "--", "mcp"]
-default_tools_approval_mode = "prompt"
-startup_timeout_sec = 60
-tool_timeout_sec = 180
-env_vars = ["PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+# Optional: disabled until vibe-kanban is installed and verified locally.
+#
+# [mcp_servers.vibeKanban]
+# command = 'C:\Program Files\nodejs\npm.cmd'
+# args = ["exec", "vibe-kanban", "--", "mcp"]
+# default_tools_approval_mode = "prompt"
+# startup_timeout_sec = 60
+# tool_timeout_sec = 180
+# env_vars = ["PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
 
-[mcp_servers.maps]
-command = 'C:\Users\Acer Nitro\venvs\maps-mcp\Scripts\python.exe'
-args = ['C:\Users\Acer Nitro\mcp-servers\maps-mcp\server.py']
-default_tools_approval_mode = "prompt"
-startup_timeout_sec = 60
-tool_timeout_sec = 180
-env_vars = ["GOOGLE_PLACES_API_KEY", "PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+# Optional: requires GOOGLE_PLACES_API_KEY and a local server.py. Current
+# C:\Users\Acer Nitro\mcp-servers directory does not exist.
+#
+# [mcp_servers.maps]
+# command = 'C:\Users\Acer Nitro\venvs\maps-mcp\Scripts\python.exe'
+# args = ['C:\Users\Acer Nitro\mcp-servers\maps-mcp\server.py']
+# default_tools_approval_mode = "prompt"
+# startup_timeout_sec = 60
+# tool_timeout_sec = 180
+# env_vars = ["GOOGLE_PLACES_API_KEY", "PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
 
-[mcp_servers.dockerGateway]
-command = 'C:\Program Files\Docker\Docker\resources\bin\docker.exe'
-args = ["mcp", "gateway", "run"]
-default_tools_approval_mode = "prompt"
-startup_timeout_sec = 60
-tool_timeout_sec = 180
-env_vars = ["PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP", "ProgramData", "ProgramFiles"]
+# Optional: requires Docker Desktop. docker.exe is not installed on this machine.
+#
+# [mcp_servers.dockerGateway]
+# command = 'C:\Program Files\Docker\Docker\resources\bin\docker.exe'
+# args = ["mcp", "gateway", "run"]
+# default_tools_approval_mode = "prompt"
+# startup_timeout_sec = 60
+# tool_timeout_sec = 180
+# env_vars = ["PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP", "ProgramData", "ProgramFiles"]
 
-[mcp_servers.symdex]
-command = 'C:\Python314\python.exe'
-args = ["-m", "symdex.mcp.server"]
-default_tools_approval_mode = "prompt"
-startup_timeout_sec = 60
-tool_timeout_sec = 180
-env_vars = ["PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+# Optional: old config pointed at missing C:\Python314\python.exe.
+#
+# [mcp_servers.symdex]
+# command = 'C:\Users\Acer Nitro\AppData\Local\Programs\Python\Python312\python.exe'
+# args = ["-m", "symdex.mcp.server"]
+# default_tools_approval_mode = "prompt"
+# startup_timeout_sec = 60
+# tool_timeout_sec = 180
+# env_vars = ["PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
 
 [windows]
 sandbox = "elevated"
