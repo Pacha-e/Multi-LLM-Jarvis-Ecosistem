@@ -48,6 +48,27 @@ class Config:
     BRAVE_API_KEY: str = os.getenv("BRAVE_API_KEY", "")
     OPENWEATHER_API_KEY: str = os.getenv("OPENWEATHER_API_KEY", "")
 
+    # Reels pipeline (metadata -> Whisper -> Obsidian)
+    # Repo layout: this file is core/jarvis/config.py -> repo root = parents[2].
+    _REPO_ROOT: Path = Path(__file__).resolve().parents[2]
+    OBSIDIAN_VAULT: str = os.getenv(
+        "OBSIDIAN_VAULT",
+        os.path.expanduser("~/Documents/OBSIDIAN/CLAUDE CODE"),
+    )
+    REELS_DIR: str = os.getenv("REELS_DIR", "")  # empty -> <OBSIDIAN_VAULT>/Reels at runtime
+    # Dedicated browser profile for scraping. NEVER the personal Chrome profile.
+    BROWSER_PROFILE_DIR: str = os.getenv(
+        "BROWSER_PROFILE_DIR",
+        str(_REPO_ROOT / "runtime" / "openclaw-jarvis" / "var" / "browser-profile"),
+    )
+    # Temp download dir for reel videos (gitignored under var/).
+    REELS_TMP_DIR: str = os.getenv(
+        "REELS_TMP_DIR",
+        str(_REPO_ROOT / "runtime" / "openclaw-jarvis" / "var" / "reels-tmp"),
+    )
+    # Apify is a PAID fallback, last resort only. Empty token -> Apify disabled.
+    APIFY_TOKEN: str = os.getenv("APIFY_TOKEN", "")
+
     # Personality
     JARVIS_NAME: str = os.getenv("JARVIS_NAME", "J.A.R.V.I.S.")
     USER_NAME: str = os.getenv("USER_NAME", "Emmanuel")

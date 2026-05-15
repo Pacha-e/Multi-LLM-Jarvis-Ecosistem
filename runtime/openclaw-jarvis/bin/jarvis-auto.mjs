@@ -145,6 +145,7 @@ function usage() {
   jarvis budget
   jarvis improve [--apply]
   jarvis voice list|set|test
+  jarvis reels <url> [--lang es]
   jarvis --target <path> [--mode auto|fast|full|council] [--budget economy|balanced|max] [--backend subscription-cli|openclaw-agent] [--dry-run] [--speak] "prompt"
   jarvis chat [--target <path>]
   jarvis voz [--target <path>]
@@ -194,15 +195,18 @@ function parseArgs(argv) {
     voiceRate: null,
     voiceVolume: null,
     voiceStyle: null,
+    reelUrl: null,
+    reelLang: null,
     promptParts: []
   };
 
   for (let i = 2; i < argv.length; i += 1) {
     const arg = argv[i];
     if (arg === "--help" || arg === "-h") args.help = true;
-    else if (["setup", "doctor", "budget", "improve", "voice", "start", "stop", "status"].includes(arg) && !args.command && args.promptParts.length === 0) {
+    else if (["setup", "doctor", "budget", "improve", "voice", "start", "stop", "status", "reels"].includes(arg) && !args.command && args.promptParts.length === 0) {
       args.command = arg;
       if (arg === "voice" && argv[i + 1] && !argv[i + 1].startsWith("-")) args.voiceAction = argv[++i];
+      if (arg === "reels" && argv[i + 1] && !argv[i + 1].startsWith("-")) args.reelUrl = argv[++i];
     }
     else if (arg === "--target" || arg === "-t") {
       args.target = argv[++i];
@@ -218,6 +222,7 @@ function parseArgs(argv) {
     else if (arg === "--rate") args.voiceRate = Number(argv[++i]);
     else if (arg === "--volume") args.voiceVolume = Number(argv[++i]);
     else if (arg === "--style") args.voiceStyle = argv[++i];
+    else if (arg === "--lang") args.reelLang = argv[++i];
     else if (arg === "--speak") args.speak = true;
     else if (arg === "--listen" || arg === "--voice") args.listen = true;
     else if (arg === "--chat") args.chat = true;
@@ -1330,6 +1335,24 @@ async function main() {
   if (args.command === "improve") {
     await runImprove(args);
     return;
+  }
+
+  if (args.command === "reels") {
+    if (!args.reelUrl) {
+      console.error("uso: jarvis reels <url> [--lang es]");
+      process.exit(2);
+    }
+    const repoRoot = resolve(ROOT, "..", "..");
+    const coreDir = join(repoRoot, "core");
+    const venvWin = join(repoRoot, ".venv", "Scripts", "python.exe");
+    const venvNix = join(repoRoot, ".venv", "bin", "python");
+    const py = existsSync(venvWin) ? venvWin
+      : existsSync(venvNix) ? venvNix
+      : (process.platform === "win32" ? "python.exe" : "python3");
+    const pyArgs = ["-m", "jarvis.pipelines.reels", args.reelUrl];
+    if (args.reelLang) pyArgs.push("--lang", args.reelLang);
+    const result = spawnSync(py, pyArgs, { cwd: coreDir, stdio: "inherit" });
+    process.exit(result.status ?? 0);
   }
 
   if (["start", "stop", "status"].includes(args.command)) {
