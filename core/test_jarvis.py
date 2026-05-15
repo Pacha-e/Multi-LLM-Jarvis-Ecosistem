@@ -34,7 +34,11 @@ try:
         if intent == expected:
             correct += 1
     accuracy = correct / len(cases)
-    passed.append(f"intent_classifier — {correct}/{len(cases)} correct ({accuracy*100:.0f}%)")
+    threshold = 0.6
+    if accuracy >= threshold:
+        passed.append(f"intent_classifier — {correct}/{len(cases)} correct ({accuracy*100:.0f}%)")
+    else:
+        errors.append(f"intent_classifier FAIL: {correct}/{len(cases)} correct ({accuracy*100:.0f}%) < {int(threshold*100)}% threshold")
 except Exception as e:
     errors.append(f"intent_classifier FAIL: {e}")
 
