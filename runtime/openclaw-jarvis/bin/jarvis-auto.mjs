@@ -706,9 +706,37 @@ function shellQuote(value) {
   return `'${String(value).replace(/'/g, "'\\''")}'`;
 }
 
+function findExecutableInPath(name) {
+  // Native resolver: walks PATH applying PATHEXT on Windows. Required because
+  // `bash -lc command -v` under Git Bash on Windows misses .CMD/.cmd/.exe
+  // shims that are normal Node/npm/global-bin install targets.
+  const env = process["env"];
+  const isWin = process.platform === "win32";
+  const pathSep = isWin ? ";" : ":";
+  const dirs = (env["PATH"] || "").split(pathSep).filter(Boolean);
+  // On Windows try PATHEXT first so we prefer executable .CMD/.EXE over
+  // extensionless shims (which spawn cannot execute natively).
+  const exts = isWin
+    ? (env["PATHEXT"] || ".COM;.EXE;.BAT;.CMD").split(";").concat([""])
+    : [""];
+  const hasExt = isWin && /\.[A-Za-z0-9]{1,4}$/.test(name);
+  const candidateExts = hasExt ? [""] : exts;
+  for (const dir of dirs) {
+    for (const ext of candidateExts) {
+      const full = `${dir}${isWin ? "\\" : "/"}${name}${ext}`;
+      if (existsSync(full)) return full;
+    }
+  }
+  return "";
+}
+
 function findExecutable(candidates) {
   for (const candidate of candidates) {
-    if (candidate.includes("/") && existsSync(candidate)) return candidate;
+    if ((candidate.includes("/") || candidate.includes("\\")) && existsSync(candidate)) {
+      return candidate;
+    }
+    const native = findExecutableInPath(candidate);
+    if (native) return native;
     const result = spawnSync("bash", ["-lc", `command -v ${shellQuote(candidate)}`], { encoding: "utf8" });
     if (result.status === 0 && result.stdout.trim()) return result.stdout.trim();
   }
@@ -716,6 +744,16 @@ function findExecutable(candidates) {
 }
 
 function runSmall(cmd, args = []) {
+  // Windows: spawn cannot execute .cmd/.bat directly. Route through
+  // `cmd.exe /c` instead of `shell: true` to preserve argv quoting when paths
+  // contain spaces (e.g. "C:\Users\Acer Nitro\...").
+  if (process.platform === "win32" && /\.(cmd|bat)$/i.test(cmd)) {
+    return spawnSync("cmd.exe", ["/c", cmd, ...args], {
+      encoding: "utf8",
+      timeout: 10000,
+      maxBuffer: 1024 * 1024
+    });
+  }
   return spawnSync(cmd, args, {
     encoding: "utf8",
     timeout: 10000,
@@ -731,10 +769,11 @@ function runDoctor({ json = false } = {}) {
   ensureConfig();
   mkdirSync(RUNS_DIR, { recursive: true });
 
-  const openclaw = findExecutable(["openclaw", "/home/emmanuel/.npm-global/bin/openclaw"]);
-  const codex = findExecutable(["codex", "/home/emmanuel/.local/bin/codex", "/home/emmanuel/.npm-global/bin/codex"]);
-  const claude = findExecutable(["claude", "/home/emmanuel/.npm-global/bin/claude"]);
-  const qwen = findExecutable(["qwen", "/home/emmanuel/.local/bin/qwen"]);
+  // Windows-native names tried first (PATHEXT resolves .CMD/.cmd/.exe).
+  const openclaw = findExecutable(["openclaw", "openclaw.cmd", "openclaw.CMD", "/home/emmanuel/.npm-global/bin/openclaw"]);
+  const codex = findExecutable(["codex", "codex.cmd", "codex.CMD", "/home/emmanuel/.local/bin/codex", "/home/emmanuel/.npm-global/bin/codex"]);
+  const claude = findExecutable(["claude", "claude.cmd", "claude.CMD", "/home/emmanuel/.npm-global/bin/claude"]);
+  const qwen = findExecutable(["qwen", "qwen.cmd", "qwen.CMD", "/home/emmanuel/.local/bin/qwen"]);
   const multica = findExecutable(["multica", "D:/Emmanuel/.multica/bin/multica.exe", "/mnt/c/Users/Acer Nitro/.multica/bin/multica"]);
   const powershell = findExecutable(["powershell.exe"]);
   const jarvis = findExecutable(["jarvis"]);
