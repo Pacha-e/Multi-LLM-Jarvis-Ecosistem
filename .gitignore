@@ -44,6 +44,7 @@ __pycache__/
 .claude-backup-pre-migration/
 runtime/openclaw-jarvis/runs/
 runtime/openclaw-jarvis/agents/*/.openclaw/
+runtime/openclaw-jarvis/var/
 
 # --- Otros archivos de entorno ---
 .DS_Store

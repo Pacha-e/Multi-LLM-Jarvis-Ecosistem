@@ -200,7 +200,7 @@ function parseArgs(argv) {
   for (let i = 2; i < argv.length; i += 1) {
     const arg = argv[i];
     if (arg === "--help" || arg === "-h") args.help = true;
-    else if (["setup", "doctor", "budget", "improve", "voice"].includes(arg) && !args.command && args.promptParts.length === 0) {
+    else if (["setup", "doctor", "budget", "improve", "voice", "start", "stop", "status"].includes(arg) && !args.command && args.promptParts.length === 0) {
       args.command = arg;
       if (arg === "voice" && argv[i + 1] && !argv[i + 1].startsWith("-")) args.voiceAction = argv[++i];
     }
@@ -1330,6 +1330,12 @@ async function main() {
   if (args.command === "improve") {
     await runImprove(args);
     return;
+  }
+
+  if (["start", "stop", "status"].includes(args.command)) {
+    const lifecycle = join(dirname(fileURLToPath(import.meta.url)), "jarvis-lifecycle.mjs");
+    const result = spawnSync(process.execPath, [lifecycle, args.command], { stdio: "inherit" });
+    process.exit(result.status ?? 0);
   }
 
   if (!["auto", "fast", "full", "council"].includes(args.mode)) {
