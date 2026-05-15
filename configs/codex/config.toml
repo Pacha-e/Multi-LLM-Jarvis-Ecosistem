@@ -4,7 +4,6 @@ model_reasoning_effort = "xhigh"
 [features]
 hooks = true
 project_doc_fallback_filenames = ["CLAUDE.md", "WARP.md", "codex.md"]
-personality = "pragmatic"
 
 [mcp_servers.openaiDeveloperDocs]
 url = "https://developers.openai.com/mcp"
