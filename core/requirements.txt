@@ -1,0 +1,65 @@
+# J.A.R.V.I.S. — Dependencies
+# Python 3.11+
+# Core: pip install -r requirements.txt
+# Optional features: see sections below
+
+# ── Environment ───────────────────────────────────────────────────────────────
+python-dotenv==1.0.1
+
+# ── Web framework ─────────────────────────────────────────────────────────────
+fastapi==0.110.0
+uvicorn[standard]==0.27.1
+python-multipart==0.0.9
+websockets==12.0
+
+# ── LangChain / LangGraph ─────────────────────────────────────────────────────
+langchain==0.1.20
+langchain-community==0.0.38
+langchain-groq==0.1.3
+langchain-anthropic==0.1.11
+langchain-openai==0.1.6
+langchain-ollama==0.1.3
+langgraph==0.1.5
+
+# ── LLM clients ───────────────────────────────────────────────────────────────
+ollama==0.1.9
+groq==0.5.0
+anthropic==0.25.0
+openai==1.25.0
+
+# ── ML / NLP ──────────────────────────────────────────────────────────────────
+scikit-learn==1.4.2
+numpy==1.26.4
+joblib==1.4.0
+
+# ── Speech ────────────────────────────────────────────────────────────────────
+faster-whisper==1.0.1
+pyttsx3==2.90
+gTTS==2.5.1
+sounddevice==0.4.6
+soundfile==0.12.1
+
+# ── HTTP / utils ──────────────────────────────────────────────────────────────
+httpx==0.27.0
+requests==2.31.0
+beautifulsoup4==4.12.3
+duckduckgo-search==5.3.0
+psutil==5.9.8
+
+# ── OPTIONAL: Telegram bot ────────────────────────────────────────────────────
+# pip install python-telegram-bot
+# python-telegram-bot==21.3
+
+# ── OPTIONAL: RAG / Obsidian knowledge base ───────────────────────────────────
+# pip install chromadb sentence-transformers
+# chromadb==0.5.0
+# sentence-transformers==3.0.1
+
+# ── OPTIONAL: Wake word (ML, accurate) ───────────────────────────────────────
+# pip install openwakeword pyaudio
+# openwakeword==0.6.0
+# pyaudio==0.2.14
+
+# ── OPTIONAL: PDF indexing ────────────────────────────────────────────────────
+# pip install pypdf
+# pypdf==4.2.0

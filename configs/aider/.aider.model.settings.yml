@@ -1,0 +1,7 @@
+- name: ollama/qwen2.5-coder:1.5b
+  extra_params:
+    num_ctx: 32768
+
+- name: ollama/phi3:mini
+  extra_params:
+    num_ctx: 16384

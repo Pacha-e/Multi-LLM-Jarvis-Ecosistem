@@ -1,0 +1,43 @@
+# Ecosistema Multi-LLM Jarvis - Git Ignore Maestro
+
+# --- Credenciales y Seguridad ---
+*.json
+*.env
+!env.example
+!mcp-alias-map.json
+!plugin-map.json
+!*.conf.yml
+!*.toml
+
+# Exclusiones de seguridad específicas (No versionar llaves/auth)
+.credentials.json
+auth.json
+oauth_creds.json
+google_accounts.json
+
+# --- Bases de Datos y Estado ---
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.db
+session_index.jsonl
+history.jsonl
+
+# --- Logs y Caché ---
+*.log
+cache/
+logs/
+tmp/
+.tmp/
+node_modules/
+.venv/
+__pycache__/
+
+# --- Directorios de sistema ignorados por seguridad ---
+.security/
+.sandbox/
+.claude-backup-pre-migration/
+
+# --- Otros archivos de entorno ---
+.DS_Store
+Thumbs.db

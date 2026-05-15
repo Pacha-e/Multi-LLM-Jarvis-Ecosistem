@@ -1,0 +1,243 @@
+﻿{
+    "summary":  {
+                    "generatedAt":  "2026-05-15T09:54:24",
+                    "claudePlugins":  38,
+                    "codexPlugins":  122,
+                    "claudeMcp":  17,
+                    "codexMcp":  16,
+                    "mappedPluginAndMcp":  0,
+                    "mappedPluginOnly":  0,
+                    "mappedMcpOnly":  0,
+                    "unmapped":  38
+                },
+    "rows":  [
+                 {
+                     "claudePlugin":  "agent-sdk-dev",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "caveman",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "clangd-lsp",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "claude-code-setup",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "claude-md-management",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "code-modernization",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "code-review",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "code-simplifier",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "commit-commands",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "csharp-lsp",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "cwc-makers",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "example-plugin",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "explanatory-output-style",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "feature-dev",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "frontend-design",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "gemini",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "gopls-lsp",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "hookify",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "jdtls-lsp",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "kotlin-lsp",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "learning-output-style",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "lua-lsp",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "math-olympiad",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "mcp-server-dev",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "php-lsp",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "playground",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "plugin-dev",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "pr-review-toolkit",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "pyright-lsp",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "ralph-loop",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "ruby-lsp",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "rust-analyzer-lsp",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "security-guidance",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "session-report",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "skill-codex",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "skill-creator",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "swift-lsp",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 },
+                 {
+                     "claudePlugin":  "typescript-lsp",
+                     "codexPlugin":  null,
+                     "codexMcp":  null,
+                     "status":  "unmapped"
+                 }
+             ]
+}

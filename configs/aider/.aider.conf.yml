@@ -1,0 +1,12 @@
+# Aider configuration - Windows
+# Default: Ollama local (sin API key)
+# Con GEMINI_API_KEY: descomenta las dos líneas gemini
+# Con OPENROUTER_API_KEY: aider --model openrouter/qwen/qwen3-coder:free
+model: ollama/qwen2.5-coder:1.5b
+# model: gemini/gemini-2.5-flash
+# editor-model: gemini/gemini-2.5-flash
+ollama-api-base: http://localhost:11434
+no-check-update: true
+no-auto-commits: true
+no-dirty-commits: true
+yes-always: true

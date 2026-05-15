@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>J.A.R.V.I.S. — Multi-LLM Control System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <!-- Boot Sequence Overlay -->
+    <div id="boot-overlay">
+      <div class="boot-content">
+        <div class="boot-logo">J.A.R.V.I.S.</div>
+        <div class="boot-sub">JUST A RATHER VERY INTELLIGENT SYSTEM</div>
+        <div class="boot-lines" id="boot-lines"></div>
+        <div class="boot-bar-wrap">
+          <div class="boot-bar" id="boot-bar"></div>
+        </div>
+        <div class="boot-pct" id="boot-pct">0%</div>
+      </div>
+    </div>
+
+    <!-- Scanlines overlay -->
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <!-- Hex grid background -->
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+    <!-- Particle system -->
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <div id="app">
+      <!-- Header HUD -->
+      <header class="hud-header">
+        <div class="hud-logo">
+          <div class="logo-ring"></div>
+          <div class="logo-text-wrap">
+            <span class="logo-text glitch" data-text="J.A.R.V.I.S."
+              >J.A.R.V.I.S.</span
+            >
+            <span class="logo-sub"
+              >JUST A RATHER VERY INTELLIGENT SYSTEM · v2.0</span
+            >
+          </div>
+        </div>
+
+        <div class="hud-center">
+          <div class="center-arc">
+            <div class="arc-pulse"></div>
+            <div class="arc-mini">
+              <div class="arc-ring r1"></div>
+              <div class="arc-ring r2"></div>
+              <div class="arc-ring r3"></div>
+              <div class="arc-core-dot"></div>
+            </div>
+          </div>
+          <div class="center-time">
+            <div id="hud-time" class="hud-time">--:--:--</div>
+            <div id="hud-date" class="hud-date">---- -- --</div>
+          </div>
+        </div>
+
+        <div class="hud-status">
+          <div class="status-chip">
+            <span class="status-dot" id="status-dot"></span>
+            <span id="status-text" class="status-label">INITIALIZING</span>
+          </div>
+          <div class="status-chip" id="provider-chip">
+            <span class="chip-icon">◈</span>
+            <span id="provider-info">LLM: ---</span>
+          </div>
+          <div class="status-chip" id="cost-chip">
+            <span class="chip-icon">◆</span>
+            <span id="cost-info">COST: ---</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Area -->
+      <main class="hud-main">
+        <!-- Left Sidebar -->
+        <aside class="left-panel">
+          <div class="panel-block">
+            <div class="panel-title">
+              <span class="title-bar"></span>
+              SISTEMA
+              <span class="title-bar"></span>
+            </div>
+            <div class="sys-grid">
+              <div class="sys-item">
+                <div class="sys-label">CPU</div>
+                <div class="sys-bar-wrap">
+                  <div class="sys-bar" id="cpu-bar"></div>
+                </div>
+                <div class="sys-val" id="sys-cpu">---</div>
+              </div>
+              <div class="sys-item">
+                <div class="sys-label">RAM</div>
+                <div class="sys-bar-wrap">
+                  <div class="sys-bar" id="ram-bar"></div>
+                </div>
+                <div class="sys-val" id="sys-ram">---</div>
+              </div>
+              <div class="sys-item">
+                <div class="sys-label">GPU</div>
+                <div class="sys-bar-wrap">
+                  <div
+                    class="sys-bar cyan"
+                    id="gpu-bar"
+                    style="width: 62%"
+                  ></div>
+                </div>
+                <div class="sys-val">GTX 1650</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-block">
+            <div class="panel-title">
+              <span class="title-bar"></span>
+              PROVEEDORES LLM
+              <span class="title-bar"></span>
+            </div>
+            <div id="provider-list" class="provider-list">
+              <div class="provider-item" id="prov-ollama">
+                <span class="prov-dot"></span>
+                <span class="prov-name">OLLAMA</span>
+                <span class="prov-status">checking…</span>
+              </div>
+              <div class="provider-item" id="prov-groq">
+                <span class="prov-dot"></span>
+                <span class="prov-name">GROQ</span>
+                <span class="prov-status">standby</span>
+              </div>
+              <div class="provider-item" id="prov-anthropic">
+                <span class="prov-dot"></span>
+                <span class="prov-name">ANTHROPIC</span>
+                <span class="prov-status">standby</span>
+              </div>
+              <div class="provider-item" id="prov-openai">
+                <span class="prov-dot"></span>
+                <span class="prov-name">OPENAI</span>
+                <span class="prov-status">standby</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-block">
+            <div class="panel-title">
+              <span class="title-bar"></span>
+              SESIÓN
+              <span class="title-bar"></span>
+            </div>
+            <div class="session-info">
+              <div class="session-row">
+                <span>ID</span>
+                <span id="sys-session" class="mono-val">---</span>
+              </div>
+              <div class="session-row">
+                <span>MSGS</span>
+                <span id="msg-count" class="mono-val">0</span>
+              </div>
+              <div class="session-row">
+                <span>MEM</span>
+                <span id="mem-count" class="mono-val">---</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Center: Arc Reactor + Chat -->
+        <div class="center-area">
+          <!-- Large Arc Reactor -->
+          <div class="arc-reactor-wrap" id="arc-wrap">
+            <div class="arc-glow-outer"></div>
+            <div class="arc-reactor">
+              <svg
+                class="arc-svg"
+                viewBox="0 0 300 300"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <!-- Outer hex ring -->
+                <polygon
+                  points="150,10 270,80 270,220 150,290 30,220 30,80"
+                  fill="none"
+                  stroke="rgba(0,212,255,0.3)"
+                  stroke-width="1.5"
+                  class="hex-rotate"
+                />
+                <!-- Rings -->
+                <circle
+                  cx="150"
+                  cy="150"
+                  r="130"
+                  fill="none"
+                  stroke="rgba(0,212,255,0.15)"
+                  stroke-width="1"
+                />
+                <circle
+                  cx="150"
+                  cy="150"
+                  r="110"
+                  fill="none"
+                  stroke="rgba(0,212,255,0.25)"
+                  stroke-width="1"
+                  class="arc-ring-1"
+                />
+                <circle
+                  cx="150"
+                  cy="150"
+                  r="88"
+                  fill="none"
+                  stroke="rgba(0,212,255,0.4)"
+                  stroke-width="1.5"
+                  class="arc-ring-2"
+                />
+                <circle
+                  cx="150"
+                  cy="150"
+                  r="68"
+                  fill="none"
+                  stroke="rgba(0,212,255,0.6)"
+                  stroke-width="2"
+                  class="arc-ring-3"
+                />
+                <!-- Triangular spokes -->
+                <g class="arc-spokes" transform="translate(150,150)">
+                  <line
+                    x1="0"
+                    y1="-88"
+                    x2="0"
+                    y2="-50"
+                    stroke="rgba(0,212,255,0.5)"
+                    stroke-width="2"
+                  />
+                  <line
+                    x1="76"
+                    y1="44"
+                    x2="43"
+                    y2="25"
+                    stroke="rgba(0,212,255,0.5)"
+                    stroke-width="2"
+                  />
+                  <line
+                    x1="-76"
+                    y1="44"
+                    x2="-43"
+                    y2="25"
+                    stroke="rgba(0,212,255,0.5)"
+                    stroke-width="2"
+                  />
+                </g>
+                <!-- Inner hexagon -->
+                <polygon
+                  points="150,105 185,127 185,172 150,195 115,172 115,127"
+                  fill="rgba(0,40,80,0.8)"
+                  stroke="rgba(0,212,255,0.8)"
+                  stroke-width="2"
+                />
+                <!-- Core -->
+                <circle
+                  cx="150"
+                  cy="150"
+                  r="28"
+                  fill="rgba(0,100,180,0.3)"
+                  stroke="rgba(0,212,255,1)"
+                  stroke-width="2"
+                  class="arc-core-pulse"
+                />
+                <circle
+                  cx="150"
+                  cy="150"
+                  r="16"
+                  fill="rgba(0,180,255,0.6)"
+                  class="arc-core-inner-pulse"
+                />
+                <circle cx="150" cy="150" r="8" fill="white" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Chat Panel -->
+          <div class="chat-panel">
+            <div class="chat-corner tl"></div>
+            <div class="chat-corner tr"></div>
+            <div class="chat-corner bl"></div>
+            <div class="chat-corner br"></div>
+
+            <div class="chat-header-bar">
+              <span class="chat-header-label">▸ TERMINAL DE COMUNICACIÓN</span>
+              <span id="typing-indicator" class="typing-ind hidden"
+                >PROCESANDO<span class="dot-pulse">...</span></span
+              >
+            </div>
+
+            <div class="chat-messages" id="chat-messages">
+              <div class="message jarvis-msg">
+                <div class="msg-avatar jarvis-avatar">J</div>
+                <div class="msg-body">
+                  <div class="msg-meta">
+                    JARVIS <span class="msg-time" id="greet-time"></span>
+                  </div>
+                  <div class="msg-text">
+                    Buenos días, Emmanuel. J.A.R.V.I.S. en línea. Todos los
+                    sistemas operacionales. ¿En qué puedo asistirle?
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="chat-input-area">
+              <div class="input-row">
+                <button class="btn-mic" id="btn-mic" title="Push to talk">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"
+                    />
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                    <line x1="12" y1="19" x2="12" y2="22" />
+                    <line x1="8" y1="22" x2="16" y2="22" />
+                  </svg>
+                </button>
+                <div class="input-wrap">
+                  <span class="input-prefix">►</span>
+                  <input
+                    type="text"
+                    id="chat-input"
+                    placeholder="Ingrese comando o consulta…"
+                    autocomplete="off"
+                  />
+                </div>
+                <button class="btn-send" id="btn-send">
+                  <span>ENVIAR</span>
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    width="14"
+                    height="14"
+                  >
+                    <line x1="22" y1="2" x2="11" y2="13" />
+                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                  </svg>
+                </button>
+              </div>
+              <div class="input-meta">
+                <span id="intent-badge" class="intent-badge"></span>
+                <span class="input-hint"
+                  >ENTER para enviar · HOLD MIC para voz</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <aside class="right-panel">
+          <div class="panel-block">
+            <div class="panel-title">
+              <span class="title-bar"></span>
+              PERSONAS
+              <span class="title-bar"></span>
+            </div>
+            <div class="persona-grid" id="persona-grid">
+              <button
+                class="persona-btn active"
+                data-persona="jarvis"
+                onclick="setPersona('jarvis')"
+              >
+                <span class="persona-icon">⬡</span>
+                <span class="persona-name">JARVIS</span>
+                <span class="persona-desc">General</span>
+              </button>
+              <button
+                class="persona-btn"
+                data-persona="coder"
+                onclick="setPersona('coder')"
+              >
+                <span class="persona-icon">⟨⟩</span>
+                <span class="persona-name">CODER</span>
+                <span class="persona-desc">Dev</span>
+              </button>
+              <button
+                class="persona-btn"
+                data-persona="researcher"
+                onclick="setPersona('researcher')"
+              >
+                <span class="persona-icon">◎</span>
+                <span class="persona-name">RESEARCH</span>
+                <span class="persona-desc">Análisis</span>
+              </button>
+              <button
+                class="persona-btn"
+                data-persona="creative"
+                onclick="setPersona('creative')"
+              >
+                <span class="persona-icon">✦</span>
+                <span class="persona-name">CREATIVE</span>
+                <span class="persona-desc">Ideas</span>
+              </button>
+              <button
+                class="persona-btn"
+                data-persona="planner"
+                onclick="setPersona('planner')"
+              >
+                <span class="persona-icon">▦</span>
+                <span class="persona-name">PLANNER</span>
+                <span class="persona-desc">Gestión</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="panel-block">
+            <div class="panel-title">
+              <span class="title-bar"></span>
+              CLASIFICADOR
+              <span class="title-bar"></span>
+            </div>
+            <div class="intent-display" id="intent-display">---</div>
+            <div class="confidence-wrap">
+              <div class="confidence-bar-bg">
+                <div class="confidence-bar" id="confidence-bar"></div>
+              </div>
+              <span class="confidence-label" id="confidence-label">0%</span>
+            </div>
+            <div class="intent-meta">ML: TF-IDF + SVM · 17 intenciones</div>
+          </div>
+
+          <div class="panel-block">
+            <div class="panel-title">
+              <span class="title-bar"></span>
+              MEMORIA
+              <span class="title-bar"></span>
+            </div>
+            <button class="btn-panel" onclick="loadMemories()">◈ RECALL</button>
+            <div id="memory-list" class="memory-list"></div>
+          </div>
+
+          <div class="panel-block">
+            <div class="panel-title">
+              <span class="title-bar"></span>
+              CONTROLES
+              <span class="title-bar"></span>
+            </div>
+            <button class="btn-panel danger" onclick="clearSession()">
+              ⊗ LIMPIAR SESIÓN
+            </button>
+            <button class="btn-panel" onclick="rebuildAgent()">
+              ↺ RECONECTAR LLM
+            </button>
+          </div>
+        </aside>
+      </main>
+
+      <!-- Bottom Status Bar -->
+      <footer class="hud-footer">
+        <div class="footer-left">
+          <span class="footer-item">JARVIS v2.0</span>
+          <span class="footer-sep">|</span>
+          <span class="footer-item" id="footer-provider">LLM: ---</span>
+          <span class="footer-sep">|</span>
+          <span class="footer-item">EAFIT · EMMANUEL HERNÁNDEZ</span>
+        </div>
+        <div class="footer-center">
+          <div class="footer-dots">
+            <span class="f-dot active"></span>
+            <span class="f-dot active"></span>
+            <span class="f-dot active"></span>
+            <span class="f-dot"></span>
+            <span class="f-dot"></span>
+          </div>
+        </div>
+        <div class="footer-right">
+          <span class="footer-item">MULTI-LLM FAILOVER</span>
+          <span class="footer-sep">|</span>
+          <span class="footer-item">LANGGRAPH REACT</span>
+          <span class="footer-sep">|</span>
+          <span class="footer-item" id="footer-status">STANDBY</span>
+        </div>
+      </footer>
+    </div>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

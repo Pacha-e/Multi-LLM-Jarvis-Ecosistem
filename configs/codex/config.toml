@@ -1,0 +1,169 @@
+model = "gpt-5.4"
+model_reasoning_effort = "xhigh"
+
+[features]
+hooks = true
+project_doc_fallback_filenames = ["CLAUDE.md", "WARP.md", "codex.md"]
+personality = "pragmatic"
+
+[mcp_servers.openaiDeveloperDocs]
+url = "https://developers.openai.com/mcp"
+default_tools_approval_mode = "approve"
+supports_parallel_tool_calls = true
+
+[mcp_servers.context7]
+command = 'C:\Program Files\nodejs\npx.cmd'
+args = ["-y", "@upstash/context7-mcp@latest"]
+default_tools_approval_mode = "approve"
+startup_timeout_sec = 60
+tool_timeout_sec = 120
+env_vars = ["PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+
+[mcp_servers.claudeMem]
+command = 'C:\Program Files\nodejs\node.exe'
+args = ['C:\Users\Acer Nitro\.claude\plugins\marketplaces\thedotmack\plugin\scripts\mcp-server.cjs']
+default_tools_approval_mode = "approve"
+startup_timeout_sec = 60
+tool_timeout_sec = 120
+env = { CLAUDE_PLUGIN_ROOT = 'C:\Users\Acer Nitro\.claude\plugins\marketplaces\thedotmack\plugin' }
+env_vars = ["PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+
+[mcp_servers.obsidian]
+command = 'C:\Program Files\nodejs\npx.cmd'
+args = ["-y", "obsidian-mcp-server"]
+default_tools_approval_mode = "prompt"
+startup_timeout_sec = 60
+tool_timeout_sec = 120
+env = { OBSIDIAN_BASE_URL = "https://127.0.0.1:27124", OBSIDIAN_VERIFY_SSL = "false", OBSIDIAN_ENABLE_CACHE = "true" }
+env_vars = ["OBSIDIAN_API_KEY", "PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+
+[mcp_servers.github]
+command = 'C:\Program Files\nodejs\npx.cmd'
+args = ["-y", "@modelcontextprotocol/server-github"]
+default_tools_approval_mode = "prompt"
+startup_timeout_sec = 60
+tool_timeout_sec = 120
+env_vars = ["GITHUB_PERSONAL_ACCESS_TOKEN", "PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+
+[mcp_servers.vercel]
+url = "https://mcp.vercel.com"
+bearer_token_env_var = "VERCEL_TOKEN"
+default_tools_approval_mode = "prompt"
+
+[mcp_servers.playwright]
+command = 'C:\Program Files\nodejs\npx.cmd'
+args = ["-y", "@playwright/mcp@latest", "--browser", "chromium"]
+default_tools_approval_mode = "prompt"
+startup_timeout_sec = 60
+tool_timeout_sec = 180
+env_vars = ["PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+
+[mcp_servers.filesystemHome]
+command = 'C:\Program Files\nodejs\npx.cmd'
+args = ["-y", "@modelcontextprotocol/server-filesystem", 'C:\Users\Acer Nitro', '\\wsl$\Ubuntu\home\emmanuel']
+default_tools_approval_mode = "prompt"
+startup_timeout_sec = 60
+tool_timeout_sec = 120
+env_vars = ["PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+
+[mcp_servers.supabase]
+command = 'C:\Program Files\nodejs\npx.cmd'
+args = ["-y", "@supabase/mcp-server-supabase@latest"]
+default_tools_approval_mode = "prompt"
+startup_timeout_sec = 60
+tool_timeout_sec = 180
+env_vars = ["SUPABASE_ACCESS_TOKEN", "PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+
+[mcp_servers.n8n]
+command = 'C:\Program Files\nodejs\npx.cmd'
+args = ["-y", "n8n-mcp@latest"]
+default_tools_approval_mode = "prompt"
+startup_timeout_sec = 60
+tool_timeout_sec = 180
+env = { MCP_MODE = "stdio" }
+env_vars = ["PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+
+[mcp_servers.nanobanana]
+command = 'C:\Users\Acer Nitro\.local\bin\uvx.exe'
+args = ["nanobanana-mcp-server@latest"]
+default_tools_approval_mode = "prompt"
+startup_timeout_sec = 60
+tool_timeout_sec = 180
+env_vars = ["GEMINI_API_KEY", "GOOGLE_API_KEY", "GCP_PROJECT_ID", "GCP_REGION", "GOOGLE_CLOUD_PROJECT", "PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+
+[mcp_servers.stitch]
+command = 'C:\Program Files\nodejs\npx.cmd'
+args = ["-y", "stitch-mcp@latest"]
+default_tools_approval_mode = "prompt"
+startup_timeout_sec = 60
+tool_timeout_sec = 180
+env_vars = ["GOOGLE_CLOUD_PROJECT", "PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+
+[mcp_servers.vibeKanban]
+command = 'C:\Program Files\nodejs\npm.cmd'
+args = ["exec", "vibe-kanban", "--", "mcp"]
+default_tools_approval_mode = "prompt"
+startup_timeout_sec = 60
+tool_timeout_sec = 180
+env_vars = ["PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+
+[mcp_servers.maps]
+command = 'C:\Users\Acer Nitro\venvs\maps-mcp\Scripts\python.exe'
+args = ['C:\Users\Acer Nitro\mcp-servers\maps-mcp\server.py']
+default_tools_approval_mode = "prompt"
+startup_timeout_sec = 60
+tool_timeout_sec = 180
+env_vars = ["GOOGLE_PLACES_API_KEY", "PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+
+[mcp_servers.dockerGateway]
+command = 'C:\Program Files\Docker\Docker\resources\bin\docker.exe'
+args = ["mcp", "gateway", "run"]
+default_tools_approval_mode = "prompt"
+startup_timeout_sec = 60
+tool_timeout_sec = 180
+env_vars = ["PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP", "ProgramData", "ProgramFiles"]
+
+[mcp_servers.symdex]
+command = 'C:\Python314\python.exe'
+args = ["-m", "symdex.mcp.server"]
+default_tools_approval_mode = "prompt"
+startup_timeout_sec = 60
+tool_timeout_sec = 180
+env_vars = ["PATH", "Path", "APPDATA", "LOCALAPPDATA", "USERPROFILE", "SystemRoot", "TEMP", "TMP"]
+
+[windows]
+sandbox = "elevated"
+
+[projects.'C:\Users\Acer Nitro\Documents\Codex\2026-04-20-quiero-que-mires-este-setup-de']
+trust_level = "trusted"
+
+[projects.'c:\users\emmanuel']
+trust_level = "trusted"
+
+[projects.'c:\users\acer nitro']
+trust_level = "trusted"
+
+[tui.model_availability_nux]
+"gpt-5.5" = 4
+
+[marketplaces.openai-bundled]
+last_updated = "2026-05-10T19:35:44Z"
+source_type = "local"
+source = '\\?\C:\Users\Acer Nitro\.codex\.tmp\bundled-marketplaces\openai-bundled'
+
+[marketplaces.openai-primary-runtime]
+last_updated = "2026-04-26T08:23:54Z"
+source_type = "local"
+source = '\\?\C:\Users\Acer Nitro\.cache\codex-runtimes\codex-primary-runtime\plugins\openai-primary-runtime'
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."browser-use@openai-bundled"]
+enabled = true

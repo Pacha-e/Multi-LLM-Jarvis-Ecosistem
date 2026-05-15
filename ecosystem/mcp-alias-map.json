@@ -1,0 +1,6 @@
+{
+  "_comment": "Keys are legacy names from Claude/shared configs; values are canonical names used in Codex.",
+  "vibe-kanban": "vibeKanban",
+  "filesystem": "filesystemHome",
+  "MCP_DOCKER": "dockerGateway"
+}

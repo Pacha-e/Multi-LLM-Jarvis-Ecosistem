@@ -1,0 +1,47 @@
+# J.A.R.V.I.S. — .gitignore
+
+# Secrets
+jarvis.env
+.env
+*.env
+*.key
+*.pem
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Data & models
+data/
+*.db
+*.sqlite
+*.pkl
+*.joblib
+*.onnx
+models/
+
+# RAG / vector DB
+data/rag_db/
+chroma_db/
+
+# Audio temp
+*.wav
+*.mp3
+*.ogg
+*.flac
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

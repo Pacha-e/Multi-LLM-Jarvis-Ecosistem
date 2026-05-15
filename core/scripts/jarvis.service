@@ -1,0 +1,43 @@
+# J.A.R.V.I.S. — WSL2 Systemd Service
+# Reel 4: 24/7 operation in WSL2 without external PC
+#
+# SETUP (in WSL2 terminal):
+#   sudo cp jarvis.service /etc/systemd/system/jarvis.service
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable jarvis
+#   sudo systemctl start jarvis
+#
+# REQUIREMENTS:
+#   1. WSL2 with systemd enabled (add to /etc/wsl.conf):
+#      [boot]
+#      systemd=true
+#   2. Ollama running: sudo systemctl enable ollama
+#   3. WSL auto-start on Windows boot (Task Scheduler):
+#      Action: wsl.exe -d Ubuntu -u root -- systemctl start jarvis
+
+[Unit]
+Description=J.A.R.V.I.S. Multi-LLM AI Ecosystem
+After=network.target ollama.service
+Wants=ollama.service
+
+[Service]
+Type=simple
+User=%i
+WorkingDirectory=/home/%i/jarvis_files
+ExecStart=/home/%i/jarvis_files/.venv/bin/python run.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=jarvis
+
+# Environment
+Environment="PYTHONUNBUFFERED=1"
+EnvironmentFile=/home/%i/jarvis_files/jarvis.env
+
+# Resource limits (GTX 1650 4GB — leave headroom for Ollama)
+# CPUQuota=80%
+# MemoryLimit=2G
+
+[Install]
+WantedBy=multi-user.target
