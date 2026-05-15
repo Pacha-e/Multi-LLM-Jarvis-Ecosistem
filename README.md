@@ -12,7 +12,7 @@ Este repositorio centraliza el ecosistema Jarvis: codigo, orquestacion, configur
 - `ecosystem/`: scripts de orquestacion, sincronizacion MCP/skills y memoria compartida.
 - `configs/`: configuraciones versionadas de herramientas externas como Claude, Codex y Aider.
 - `runtime/openclaw-jarvis/`: runtime operativo del comando `jarvis`, agentes OpenClaw y dispatcher multi-CLI.
-- `scripts/`: automatizacion local, setup y enlaces simbolicos.
+- `scripts/`: automatizacion local, setup, symlinks y supervisor 24/7.
 - `docs/`: investigacion, arquitectura, backlog y runbooks del ecosistema.
 
 ## 3. Componentes Detallados
@@ -22,6 +22,7 @@ Este repositorio centraliza el ecosistema Jarvis: codigo, orquestacion, configur
 - `jarvis/`: logica principal, enrutador de LLMs, memoria y agentes.
 - `jarvis/agent/`: router, RAG, memory, personas y tools.
 - `jarvis/voice/`: STT, TTS y wake word.
+- `jarvis/pipelines/`: pipelines de contenido como Reels -> Whisper -> Obsidian.
 - `jarvis/ui/`: interfaz web del asistente.
 
 ### Ecosistema de Orquestacion (`ecosystem/`)
@@ -40,6 +41,7 @@ Este repositorio centraliza el ecosistema Jarvis: codigo, orquestacion, configur
 
 - `bin/jarvis-auto.mjs`: interfaz diaria, doctor, routing y modos de ejecucion.
 - `bin/jarvis-dispatch.mjs`: dispatcher hacia Claude, Codex, Qwen, Aider, Multica y agentes OpenClaw.
+- `bin/jarvis-lifecycle.mjs`: `start|stop|status` del core FastAPI.
 - `agents/`: perfiles `orion`, `kiro`, `nova`, `spark` e `iris`.
 - `config/`: perfil de Jarvis versionable sin secretos.
 
@@ -49,20 +51,29 @@ Este repositorio centraliza el ecosistema Jarvis: codigo, orquestacion, configur
 - `ecosystem/` contiene hooks y scripts para mantener coherencia entre Windows, WSL y herramientas AI.
 - Obsidian funciona como memoria central del ecosistema y debe registrar decisiones duraderas.
 
-## 5. Investigacion y Vision
+## 5. Investigacion y Runbooks
 
-- `docs/jarvis-vision-research-2026-05-15.md`: investigacion de referencia para convertir el ecosistema en un Jarvis operativo: OpenClaw como control plane, memoria Obsidian, scraping de Reels, browser automation, voz local y plan 24/7.
+- `docs/jarvis-vision-research-2026-05-15.md`: vision Jarvis, OpenClaw, Obsidian, scraping de Reels, browser automation, voz local y plan 24/7.
 - `docs/unification-plan-2026-05-15.md`: plan paso a paso para que el monorepo sea la unica fuente de verdad.
-- `docs/fase1-completion-2026-05-15.md`: reporte de cierre Fase 1 (unificacion runtime + doctor Windows + tests + templates configs + legacy congelado).
+- `docs/fase1-completion-2026-05-15.md`: cierre Fase 1.
+- `docs/setup-wsl2-2026-05-15.md`: runbook para ejecutar Jarvis 24/7 con WSL2 + Windows Task Scheduler.
+- `docs/HANDOFF-2026-05-15.md`: estado actual, decisiones, riesgos y siguientes pasos.
 
-## 6. Estado Fase 1 — COMPLETA (2026-05-15)
+## 6. Estado Fase 1 - Completa (2026-05-15)
 
 Commits clave:
-- `6873a45` unify runtime
-- `6e032b1` doctor PATH Windows (.CMD shims)
-- `ecea009` test_jarvis expone accuracy real intent_classifier
-- `123c5db` templates `*.example.json`
 
-Doctor `jarvis doctor`: codex/claude/qwen OK con paths nativos Windows. Tests: 6/7 PASS. Legacy `jarvis_files/` y `OpenClawJarvis/` marcados `LEGACY.md`, congelados.
+- `6873a45` unify runtime.
+- `6e032b1` doctor PATH Windows (.CMD shims).
+- `17b05f9` IntentClassifier 5/5 en espanol real.
+- `123c5db` templates `*.example.json`.
 
-Bug abierto: `IntentClassifier` train 100% / predict 0/5 español. Ver `docs/fase1-completion-2026-05-15.md`.
+Doctor `jarvis doctor`: Codex/Claude/Qwen OK con paths nativos Windows. Tests: 7/7 PASS. Legacy `jarvis_files/` y `OpenClawJarvis/` marcados `LEGACY.md`, congelados.
+
+## 7. Estado Fase 2 - En Curso (2026-05-15)
+
+- Router de modelos por coste/capacidad: `simple`, `medium`, `complex`.
+- Pipeline `jarvis reels <url>`: `yt-dlp -> Playwright perfil dedicado -> Apify opcional -> Whisper -> Obsidian`.
+- Vault por defecto: `D:\Emmanuel\OBSIDIAN\CLAUDE CODE`.
+- Plan 24/7 elegido: WSL2 + Windows Task Scheduler, sin VPS.
+- Agent Browser de Vercel queda como mejora futura dentro de WSL2; Playwright sigue como fallback actual.

@@ -58,11 +58,12 @@ function parseArgs(argv) {
 }
 
 function pythonExe() {
-  // Prefer venv if present, else PATH python
+  // Prefer a venv that matches the current OS. In WSL2, a Windows venv under
+  // /mnt/c may exist but cannot run as the FastAPI interpreter.
   const venvWin = resolve(REPO_ROOT, ".venv", "Scripts", "python.exe");
   const venvNix = resolve(REPO_ROOT, ".venv", "bin", "python");
-  if (existsSync(venvWin)) return venvWin;
-  if (existsSync(venvNix)) return venvNix;
+  if (process.platform === "win32" && existsSync(venvWin)) return venvWin;
+  if (process.platform !== "win32" && existsSync(venvNix)) return venvNix;
   return process.platform === "win32" ? "python.exe" : "python3";
 }
 
