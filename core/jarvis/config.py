@@ -53,7 +53,7 @@ class Config:
     _REPO_ROOT: Path = Path(__file__).resolve().parents[2]
     OBSIDIAN_VAULT: str = os.getenv(
         "OBSIDIAN_VAULT",
-        os.path.expanduser("~/Documents/OBSIDIAN/CLAUDE CODE"),
+        r"D:\Emmanuel\OBSIDIAN\CLAUDE CODE",
     )
     REELS_DIR: str = os.getenv("REELS_DIR", "")  # empty -> <OBSIDIAN_VAULT>/Reels at runtime
     # Dedicated browser profile for scraping. NEVER the personal Chrome profile.
