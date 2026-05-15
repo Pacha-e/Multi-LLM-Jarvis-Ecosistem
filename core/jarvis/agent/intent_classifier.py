@@ -6,13 +6,14 @@ import os
 import joblib
 import numpy as np
 from pathlib import Path
-from sklearn.pipeline import Pipeline
+from sklearn.pipeline import Pipeline, FeatureUnion
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.svm import SVC
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report
 
-MODEL_PATH = Path("data/intent_classifier.pkl")
+# Absolute path → invariant to CWD (was relative, caused stale-pkl issues across run dirs)
+MODEL_PATH = Path(__file__).resolve().parents[2] / "data" / "intent_classifier.pkl"
 
 # Training data: (text, intent)
 TRAINING_DATA = [
@@ -121,18 +122,26 @@ CLASSES = ["weather", "time", "search", "memory_store", "memory_recall", "calcul
 
 
 def build_pipeline() -> Pipeline:
+    # word + char_wb ngrams → robust to morphological variation in Spanish/English
+    # LogisticRegression calibrated natively (no Platt scaling drift like SVC.predict_proba)
     return Pipeline([
-        ("tfidf", TfidfVectorizer(
-            ngram_range=(1, 2),
-            max_features=5000,
-            sublinear_tf=True,
-            min_df=1,
-        )),
-        ("svc", SVC(
-            kernel="rbf",
-            C=10,
-            gamma="scale",
-            probability=True,
+        ("feats", FeatureUnion([
+            ("word", TfidfVectorizer(
+                ngram_range=(1, 2),
+                min_df=1,
+                sublinear_tf=True,
+            )),
+            ("char", TfidfVectorizer(
+                analyzer="char_wb",
+                ngram_range=(3, 5),
+                min_df=1,
+                sublinear_tf=True,
+            )),
+        ])),
+        ("clf", LogisticRegression(
+            C=4,
+            max_iter=2000,
+            class_weight="balanced",
         )),
     ])
 
